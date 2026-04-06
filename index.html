@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snax - Your Local Grocery Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('Images/SnaxExpress.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .nav-link:hover {
+            color: #f59e0b;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-blue-800 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold flex items-center">
+                <i class="fas fa-store mr-2"></i> Sasol Snax Express
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="nav-link font-medium">Home</a>
+                <a href="menu.html" class="nav-link font-medium">Menu & Deals</a>
+                <a href="About.html" class="nav-link font-medium">About</a>
+            </div>
+            <button class="md:hidden focus:outline-none" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-blue-800 px-4 py-2" id="mobile-menu">
+            <a href="index.html" class="block py-2 nav-link">Home</a>
+            <a href="menu.html" class="block py-2 nav-link">Menu & Deals</a>
+            <a href="about.html" class="block py-2 nav-link">About</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero h-96 flex items-center justify-center text-white">
+        <div class="text-center px-4" data-aos="fade-up">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Welcome to Snax</h1>
+            <p class="text-xl md:text-2xl mb-6">Your one-stop shop for groceries and delicious fast food</p>
+            <a href="menu.html" class="bg-blue-800 hover:bg-amber-800 text-white font-bold py-3 px-6 rounded-full transition duration-300 inline-block">View Today's Deals</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 px-4 container mx-auto">
+        <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">About Snax Express</h2>
+            <div class="text-gray-600 text-lg space-y-4">
+                <p>Snax is your friendly neighborhood grocery store offering fresh produce, pantry staples, and delicious ready-to-eat meals. We pride ourselves on quality products at affordable prices.</p>
+                <p>Our services include:</p>
+                <ul class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                    <li class="bg-white p-4 rounded-lg shadow">
+                        <i class="fas fa-shopping-cart w-10 h-100 mx-auto text-blue-600 mb-3"></i>
+                        <h3 class="font-bold mb-1">Fresh Groceries</h3>
+                        <p class="text-sm">Daily deliveries of fresh fruits, vegetables, and dairy</p>
+                    </li>
+                    <li class="bg-white p-4 rounded-lg shadow">
+                        <i class="fas fa-utensils w-10 h-100 mx-auto text-blue-600 mb-3"></i>
+                        <h3 class="font-bold mb-1">Healthy meals</h3>
+                        <p class="text-sm">Hot meals, sandwiches, and snacks made fresh daily</p>
+                    </li>
+                    <li class="bg-white p-4 rounded-lg shadow">
+                        <i class="fas fa-percent w-10 h-100 mx-auto text-blue-600 mb-3"></i>
+                        <h3 class="font-bold mb-1">Daily Deals</h3>
+                        <p class="text-sm">Special discounts on select items every day</p>
+                    </li>
+                    <li class="bg-white p-4 rounded-lg shadow">
+                        <img src="Images/sasol.gif" alt="Sasol" class="w-30 h-11 mx-auto mb-3">
+                        <p class="text-sm">"Innovating for a better world"</p>
+                        <p class="text-sm">Services available 24/7</p>
+                    </li>
+                    <li class="bg-white p-4 rounded-lg shadow">
+                        <i class="fas fa-credit-card w-10 h-100 mx-auto text-blue-600 mb-3"></i>
+                        <h3 class="font-bold mb-1">ATM Services</h3>
+                        <p class="text-sm">Capitec & Absa ATM's available 24/7</p>
+                    </li>  
+                    <li class="bg-white p-4 rounded-lg shadow">
+                        <img src="Images/Overland.png" alt="Overland" class="w-30 h-12 mx-auto mb-3">
+                        <p class="text-sm">"We are a familia!"</p>
+                        <p class="text-sm">For those who drink responsibly</p>
+                    </li>
+                      
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-4">Snax Grocery Store</h3>
+                    <p>Reaching new frontiers</p>
+                </div>
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold mb-4">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><a href="index.html" class="hover:text-amber-400">Home</a></li>
+                            <li><a href="menu.html" class="hover:text-amber-400">Menu & Deals</a></li>
+                            <li><a href="About.html" class="hover:text-amber-400">About</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-4">Contact</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-center"><i class="fas fa-phone mr-2"></i> (+27) 053 313 7800</li>
+                            <li class="flex items-center"><i class="fab fa-facebook-f mr-2"></i> Snax Express Postmasburg</li>
+                            <li class="flex items-center"><i class="fas fa-map-marker-alt mr-2"></i> 2 Kromme Ave, Postmasburg, South Africa, 8420</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-400">
+                <p>&copy; 2023 Snax Express Grocery Store. All rights reserved.</p>
+                <p>Powered by Kalahari Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init();
+        
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
