@@ -59,8 +59,8 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero h-96 flex items-center justify-center text-white">
-        <div class="text-center px-4" data-aos="fade-up">
+    <section id="hero" class="hero h-96 flex items-center justify-center text-white">
+        <div id="heroText" class="text-center px-4" data-aos="fade-up">
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Welcome to Snax</h1>
             <p class="text-xl md:text-2xl mb-6">Your one-stop shop for groceries and delicious fast food</p>
             <a href="menu.html" class="bg-blue-800 hover:bg-amber-800 text-white font-bold py-3 px-6 rounded-full transition duration-300 inline-block">View Today's Deals</a>
@@ -168,6 +168,89 @@
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         });
+    </script>
+    <script>
+        // Contrast detection for hero text: samples the background image
+        (function() {
+            function getUrlFromBackground(bg) {
+                const m = bg.match(/url\(["']?(.*?)["']?\)/);
+                return m ? m[1] : null;
+            }
+
+            function parseOverlayAlpha(bg) {
+                // attempt to find rgba(...,a) in the gradient layer
+                const m = bg.match(/rgba\([^)]*?,\s*([0-9.]+)\)/);
+                return m ? parseFloat(m[1]) : null;
+            }
+
+            function sampleAndSet() {
+                const hero = document.getElementById('hero');
+                const heroText = document.getElementById('heroText');
+                if (!hero || !heroText) return;
+
+                const style = getComputedStyle(hero);
+                const imageUrl = getUrlFromBackground(style.backgroundImage || '');
+                if (!imageUrl) return;
+
+                const overlayAlpha = parseOverlayAlpha(style.backgroundImage || '') || 0.5;
+
+                const img = new Image();
+                img.crossOrigin = 'Anonymous';
+                img.onload = function() {
+                    const heroRect = hero.getBoundingClientRect();
+                    const textRect = heroText.getBoundingClientRect();
+
+                    // draw image scaled to hero dimensions so coords map directly
+                    const canvas = document.createElement('canvas');
+                    canvas.width = Math.max(1, Math.round(heroRect.width));
+                    canvas.height = Math.max(1, Math.round(heroRect.height));
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    // compute sampling area (intersection of text box within hero)
+                    const sx = Math.max(0, Math.round(textRect.left - heroRect.left));
+                    const sy = Math.max(0, Math.round(textRect.top - heroRect.top));
+                    const sw = Math.max(1, Math.round(textRect.width));
+                    const sh = Math.max(1, Math.round(textRect.height));
+
+                    // limit sampling size to reasonable amount
+                    const sampleStep = Math.max(4, Math.floor(Math.min(sw, sh) / 30));
+                    let total = 0, count = 0;
+                    try {
+                        const data = ctx.getImageData(sx, sy, Math.min(sw, canvas.width - sx), Math.min(sh, canvas.height - sy)).data;
+                        for (let i = 0; i < data.length; i += 4 * sampleStep) {
+                            const r = data[i], g = data[i+1], b = data[i+2];
+                            // relative luminance
+                            const lum = (0.2126*r + 0.7152*g + 0.0722*b) / 255;
+                            total += lum;
+                            count++;
+                        }
+                    } catch (e) {
+                        // fallback: if cross-origin or other error, default to dark text
+                        total = 1.0; count = 1;
+                    }
+
+                    const avgLum = count ? (total / count) : 0.5;
+                    // account for dark overlay (assume overlay color black)
+                    const finalLum = avgLum * (1 - overlayAlpha);
+
+                    const useDark = finalLum > 0.5;
+                    const color = useDark ? '#000000' : '#ffffff';
+
+                    // only change headings and paragraphs inside heroText (not buttons)
+                    heroText.querySelectorAll('h1, h2, p').forEach(el => {
+                        el.style.color = color;
+                    });
+                };
+                img.onerror = function() { /* ignore */ };
+                img.src = imageUrl;
+            }
+
+            // run on load and on resize/orientation change
+            window.addEventListener('load', sampleAndSet);
+            window.addEventListener('resize', function() { setTimeout(sampleAndSet, 150); });
+            window.addEventListener('orientationchange', function() { setTimeout(sampleAndSet, 250); });
+        })();
     </script>
 </body>
 </html>
